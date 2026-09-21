@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #222;
+}
+
+header {
+    border-bottom: 1px solid #ccc;
+}
+
+header nav > button {
+    font-size: 30px;
+    background: none;
+    border: none;
+}
+
+header nav {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    justify-content: space-between;
+
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 500;
+    color:#222;
+    text-decoration: none;
+    margin-left: -20px;
+}
+.search{
+    display: flex;
+    align-items: center;
+}
+.search label {
+    display: none;
+
+}
+.search-box{
+    position:relative;
+    width: 350px;
+}
+.search input {
+    width: 100%;
+    height: 40px;
+    border-radius: 30px;
+    padding: 0 50px 0 20px;
+    font-size: 18px;
+    box-sizing: border-box;
+    border: 2px solid #222;
+    border-radius: 25px;
+    box-sizing: border-box;
+
+    
+}
+.search button {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+}
+.actions button {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+}
+.categories {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding-top: 2px;
+    border-bottom: 1px solid #ddd;
+}
+.categories a {
+    font-family: "Playfair Display", serif;
+    color: #222;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 500;
+    padding: 40px 10px 25px;
+}
+.categories a.active {
+    font-weight: bold;
+    border-bottom: 4px solid #222;
+}
+.hero {
+    width: 100%;
+}
+.hero img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
+}
+.brands {
+    padding: 70px 60px;
+}
+.brands h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+}
+.brand-list{
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+}
+.brand{
+    flex: 0 0 220px;
+    text-decoration: none;
+    color: #222;
+}
+.brand img{
+    width: 220px;
+    height: 220px;
+    object-fit:cover;
+    display: block;
+}
+.brand h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-weight: 500;
+    text-align: center;
+    margin: 15px 0 0;
+}
+.heading-line {
+    width: 70px;
+    height: 1px;
+    background-color: #222;
+    margin: 2px auto 40px;
+}
