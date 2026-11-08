@@ -1,18 +1,18 @@
-const express = require('express'); 
-const mysql = require("mysql2"); 
+const express = require('express');
+const mysql = require("mysql2");
 const cors = require("cors");
-const bcrypt = require("bcrypt"); 
-const crypto = require("crypto"); 
-const cookieParser = require("cookie-parser"); 
+const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const cookieParser = require("cookie-parser");
 require('dotenv').config();
 
 
-const app = express(); 
+const app = express();
 
-app.use(express.json());  
-app.use(cookieParser()); 
+app.use(express.json());
+app.use(cookieParser());
 
-app.use(cors({  
+app.use(cors({
     origin: true,
     credentials: true
 }));
@@ -22,8 +22,8 @@ const sessions = new Map();
 
 function getLoggedInUser(req) {
 
-    const sessionId = req.cookies.sessionId; // Get the session ID from the cookies 
-    const user = sessions.get(sessionId); 
+    const sessionId = req.cookies.sessionId; 
+    const user = sessions.get(sessionId);
 
     if (user) {
         return user;
@@ -45,9 +45,8 @@ function requireAdmin(req, res, next) {
     next();
 }
 
-
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
+    host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
@@ -59,10 +58,7 @@ db.connect((error) => {
         return;
     }
     console.log("Connected to MaraDB");
-}); 
-
-
-
+});
 
 app.get("/api/products", (req, res) => {
     const sql = `
@@ -190,7 +186,7 @@ app.post("/api/login", (req, res) => {
         res.cookie(
             "sessionId",
             sessionId,
-            { httpOnly: true, sameSite: "lax", path: "/" } 
+            { httpOnly: true, sameSite: "lax", path: "/" }
         );
 
         res.json({

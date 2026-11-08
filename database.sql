@@ -125,5 +125,6 @@ FROM products
 JOIN brands ON products.brand_id = brands.id;
 
 
+
 -- To make a user an admin, register an account in the app first, then run:
 -- UPDATE users SET role = 'admin' WHERE email = 'your-email@example.com';

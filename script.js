@@ -1,23 +1,14 @@
 
 
-/* 
-   1. INSTÄLLNINGAR OCH STATE
-    */
-
+// CONFIGURATION AND STATE
 const API_URL = "http://127.0.0.1:3000/api";
 
-let allProducts = [];     
-let favoriteItems = [];    
-let cartItems = [];        
-let currentUser = null;   
+let allProducts = [];
+let favoriteItems = [];
+let cartItems = [];
+let currentUser = null;
 
-
-/* 
-   2. PRODUKTER
-    */
-
-// ---------- Produktpanel (detaljer) ----------
-
+// PRODUCTS
 const productPanel = document.querySelector("#product-panel");
 const productDetails = document.querySelector("#product-details");
 const closeProductPanel = document.querySelector("#close-product-panel");
@@ -26,16 +17,13 @@ closeProductPanel.addEventListener("click", function () {
     productPanel.classList.remove("open");
 });
 
-
-// ---------- Rita produktkorten ----------
-
 function displayProducts(products) {
 
     const productList = document.querySelector("#product-list");
 
     if (products.length === 0) {
-    productList.innerHTML = "<p>No bags found. Try a different search or filter.</p>";
-    return;
+        productList.innerHTML = "<p>No bags found. Try a different search or filter.</p>";
+        return;
     }
 
     productList.innerHTML = "";
@@ -65,7 +53,7 @@ function displayProducts(products) {
         `;
 
 
-        // OPEN PRODUCT DETAILS
+        // Open product details panel
         productCard.addEventListener("click", function () {
 
             productDetails.innerHTML = `
@@ -84,7 +72,7 @@ function displayProducts(products) {
         productList.appendChild(productCard);
 
 
-        // ADD TO BAG
+        // Add product to cart
         const addButton = productCard.querySelector(".add-to-cart");
 
         addButton.addEventListener("click", function (event) {
@@ -94,12 +82,9 @@ function displayProducts(products) {
             addToCart(product);
         });
 
-
-        // FAVORITES
         const favoriteButton = productCard.querySelector(".favorite-button");
 
 
-        // CHECK IF PRODUCT IS ALREADY A FAVORITE
         const isFavorite = favoriteItems.some(
             item => item.id === product.id
         );
@@ -115,8 +100,7 @@ function displayProducts(products) {
             favoriteButton.textContent = "♡";
         }
 
-
-        // ADD OR REMOVE FAVORITE
+        // Add/remove product from favorites
         favoriteButton.addEventListener("click", async function (event) {
 
             event.stopPropagation();
@@ -130,14 +114,10 @@ function displayProducts(products) {
 
                 return;
             }
-
-
             const alreadyFavorite = favoriteItems.some(
                 item => item.id === product.id
             );
 
-
-            // REMOVE FAVORITE
             if (alreadyFavorite) {
 
                 try {
@@ -167,8 +147,6 @@ function displayProducts(products) {
                     );
                 }
 
-
-            // ADD FAVORITE
             } else {
 
                 try {
@@ -212,9 +190,6 @@ function displayProducts(products) {
     });
 }
 
-
-// ---------- Hämta produkter från databasen ----------
-
 async function loadProducts() {
     try {
         const response = await fetch(`${API_URL}/products`);
@@ -222,10 +197,8 @@ async function loadProducts() {
 
         allProducts = products;
 
-        // Create the product cards
         displayProducts(allProducts);
 
-        // Create the filter options from the data
         createFilterOptions(
             allProducts,
             "brand",
@@ -259,12 +232,7 @@ async function loadProducts() {
     }
 }
 
-
-/* 
-   3. FILTER, KATEGORIER OCH SÖK
-    */
-
-// ---------- Kategorilänkar ----------
+// Filtering, searching, and category selection
 
 const categoryLinks = document.querySelectorAll(".categories a");
 
@@ -286,7 +254,7 @@ categoryLinks.forEach(link => {
             displayProducts(allProducts);
             productsTitle.textContent = "All Bags";
 
-            document.body.classList.remove("category-view"); 
+            document.body.classList.remove("category-view");
 
         } else {
             const filteredProducts = allProducts.filter(product => {
@@ -306,8 +274,6 @@ categoryLinks.forEach(link => {
 });
 
 
-// ---------- Filterpanel ----------
-
 const priceFilter = document.querySelector("#price-filter");
 const priceValue = document.querySelector("#price-value");
 const filterButton = document.querySelector("#filter-button");
@@ -315,16 +281,16 @@ const filterPanel = document.querySelector("#filter-panel");
 const applyFiltersButton = document.querySelector("#apply-filters");
 const resetFiltersButton = document.querySelector("#reset-filters");
 
-// Skapar kryssrutor av unika värden (t.ex. alla märken) i produktlistan
-function createFilterOptions(products, property, containerId, className) { //alla produkter, vilken egenskap, var som ska skapas, vilken klass ska kryssrutorna ha
+// Generate filter checkboxes from unique product values
+function createFilterOptions(products, property, containerId, className) {
     const container = document.querySelector(containerId);
     container.innerHTML = "";
 
     const options = [...new Set(
-        products.map(product => product[property]) //plockar ut alla värden för den egenskapen (t.ex. alla märken) och tar bort dubbletter med Set
+        products.map(product => product[property])
     )];
 
-    options.forEach(option => { 
+    options.forEach(option => {
         const label = document.createElement("label");
         label.innerHTML = `
         <input
@@ -332,28 +298,24 @@ function createFilterOptions(products, property, containerId, className) { //all
         value="${option}"
         class="${className}"> 
         ${option}`;
-        container.appendChild(label); 
+        container.appendChild(label);
     });
 }
 
-// Returnerar de produkter som matchar alla valda filter
 function filterProducts(products, filters) {
     return products.filter(product => {
 
-        // Price
         if (product.price > filters.maxPrice) {
             return false;
         }
 
-        // Brand
         if (
             filters.brands.length > 0 &&
-            !filters.brands.includes(product.brand) 
+            !filters.brands.includes(product.brand)
         ) {
             return false;
         }
 
-        // Color
         if (
             filters.colors.length > 0 &&
             !filters.colors.includes(product.color)
@@ -361,7 +323,6 @@ function filterProducts(products, filters) {
             return false;
         }
 
-        // Condition
         if (
             filters.conditions.length > 0 &&
             !filters.conditions.includes(product.item_condition)
@@ -369,7 +330,6 @@ function filterProducts(products, filters) {
             return false;
         }
 
-        // Type
         if (
             filters.types.length > 0 &&
             !filters.types.includes(product.category)
@@ -393,7 +353,7 @@ applyFiltersButton.addEventListener("click", function () {
     const maxPrice = Number(priceFilter.value);
 
     const selectedBrands = [
-        ...document.querySelectorAll(".brand-option:checked") // plockar ut alla kryssrutor med klassen brand-option som är ikryssade
+        ...document.querySelectorAll(".brand-option:checked")
     ].map(input => input.value);
 
     const selectedColors = [
@@ -409,20 +369,20 @@ applyFiltersButton.addEventListener("click", function () {
     ].map(input => input.value);
 
     const filters = { // skapar ett objekt med alla valda filter
-        maxPrice: maxPrice, 
+        maxPrice: maxPrice,
         brands: selectedBrands,
         colors: selectedColors,
         conditions: selectedConditions,
         types: selectedTypes
     };
 
-    const filteredProducts = filterProducts( // filtrerar produkterna med hjälp av funktionen filterProducts
+    const filteredProducts = filterProducts(
         allProducts,
         filters
     );
 
     displayProducts(filteredProducts);
-    filterPanel.classList.remove("open"); 
+    filterPanel.classList.remove("open");
 });
 
 resetFiltersButton.addEventListener("click", function () {
@@ -439,8 +399,7 @@ resetFiltersButton.addEventListener("click", function () {
 });
 
 
-// ---------- Sök ----------
-
+// Search functionality
 const searchForm = document.querySelector(".search");
 const searchInput = document.querySelector("#search");
 
@@ -465,17 +424,10 @@ searchForm.addEventListener("submit", event => {
     });
 });
 
-
-/* ==========================================================
-   4. VARUKORG
-   (sparas i localStorage, bara produkt-id:n, en nyckel per användare)
-   ========================================================== */
-
+// CART
 const cartButton = document.querySelector("#cart-button");
 const cart = document.querySelector("#cart");
 const closeCartButton = document.querySelector("#close-cart");
-
-// ---------- Öppna / stäng ----------
 
 cartButton.addEventListener("click", function () {
     cart.classList.add("open");
@@ -484,9 +436,6 @@ cartButton.addEventListener("click", function () {
 closeCartButton.addEventListener("click", function () {
     cart.classList.remove("open");
 });
-
-
-// ---------- Spara och ladda ----------
 
 function getCartKey() {
     if (currentUser) {
@@ -522,9 +471,6 @@ function loadCart() {
     saveCart();
 }
 
-
-// ---------- Lägga till / ta bort ----------
-
 function addToCart(product) {
 
     const alreadyInCart = cartItems.some(item => item.id === product.id);
@@ -546,9 +492,6 @@ function removeFromCart(productId) {
     saveCart();
     renderCart();
 }
-
-
-// ---------- Rita varukorgen ----------
 
 function renderCart() {
 
@@ -588,17 +531,10 @@ function renderCart() {
     cartCount.textContent = cartItems.length;
 }
 
-
-/* ==========================================================
-   5. FAVORITER
-   (databasen är den riktiga listan, favoriteItems är en kopia i webbläsaren)
-   ========================================================== */
-
+// FAVORITES
 const favoritesButton = document.querySelector("#favorites-button");
 const favoritesPanel = document.querySelector("#favorites-panel");
 const closeFavoritesButton = document.querySelector("#close-favorites");
-
-// ---------- Öppna / stäng ----------
 
 favoritesButton.addEventListener("click", function () {
     renderFavorites();
@@ -608,9 +544,6 @@ favoritesButton.addEventListener("click", function () {
 closeFavoritesButton.addEventListener("click", function () {
     favoritesPanel.classList.remove("open");
 });
-
-
-// ---------- Hämta från servern ----------
 
 async function loadFavorites() {
 
@@ -637,7 +570,6 @@ async function loadFavorites() {
 
         renderFavorites();
 
-        // Update hearts on product cards
         displayProducts(allProducts);
         loadCart();
 
@@ -645,9 +577,6 @@ async function loadFavorites() {
         console.error("Could not load favorites:", error);
     }
 }
-
-
-// ---------- Ta bort från favoritpanelen ----------
 
 async function removeFavorite(productId) {
     await fetch(`${API_URL}/favorites/${productId}`, {
@@ -657,9 +586,6 @@ async function removeFavorite(productId) {
 
     await loadFavorites();
 }
-
-
-// ---------- Rita favoritpanelen ----------
 
 function renderFavorites() {
 
@@ -703,11 +629,7 @@ function renderFavorites() {
     });
 }
 
-
-/* ==========================================================
-   6. INLOGGNING, REGISTRERING OCH PROFIL
-   ========================================================== */
-
+// LOGIN AND REGISTER
 const profileButton = document.querySelector("#profile-button");
 const loginPanel = document.querySelector("#login-panel");
 const closeLoginButton = document.querySelector("#close-login");
@@ -719,8 +641,6 @@ const logoutButton = document.querySelector("#logout-button");
 const registerForm = document.querySelector("#register-form");
 const registerMessage = document.querySelector("#register-message");
 
-// ---------- Öppna / stäng ----------
-
 profileButton.addEventListener("click", function () {
     loginPanel.classList.add("open");
 });
@@ -729,9 +649,7 @@ closeLoginButton.addEventListener("click", function () {
     loginPanel.classList.remove("open");
 });
 
-
-// ---------- Registrera ----------
-
+// Register new user
 registerForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -768,9 +686,6 @@ registerForm.addEventListener("submit", async function (event) {
         registerMessage.textContent = "Could not connect to the server.";
     }
 });
-
-
-// ---------- Logga in ----------
 
 loginForm.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -826,9 +741,6 @@ loginForm.addEventListener("submit", async function (event) {
     }
 });
 
-
-// ---------- Logga ut ----------
-
 logoutButton.addEventListener("click", async function () {
 
     try {
@@ -855,7 +767,7 @@ logoutButton.addEventListener("click", async function () {
             document.querySelector("#admin-button")
                 .style.display = "none";
 
-            loginMessage.textContent = ""; 
+            loginMessage.textContent = "";
 
             console.log("Logged out");
         }
@@ -864,9 +776,6 @@ logoutButton.addEventListener("click", async function () {
         console.error("Logout failed:", error);
     }
 });
-
-
-// ---------- Kolla om man redan är inloggad (vid sidladdning) ----------
 
 function setLoggedInUser(user) {
     currentUser = user;
@@ -897,11 +806,7 @@ async function checkLogin() {
     }
 }
 
-
-/* ==========================================================
-   7. SIDOMENY
-   ========================================================== */
-
+// Side menu
 const menuButton = document.querySelector("#menu-button");
 const sideMenu = document.querySelector("#side-menu");
 const closeMenuButton = document.querySelector("#close-menu");
@@ -914,11 +819,7 @@ closeMenuButton.addEventListener("click", function () {
     sideMenu.classList.remove("open");
 });
 
-
-/* ==========================================================
-   8. ADMIN
-   ========================================================== */
-
+// ADMIN PANEL
 const adminButton = document.querySelector("#admin-button");
 const adminPanel = document.querySelector("#admin-panel");
 const closeAdminButton = document.querySelector("#close-admin");
@@ -931,10 +832,7 @@ const closeEditButton = document.querySelector("#close-edit");
 const editProductForm = document.querySelector("#edit-product-form");
 const editMessage = document.querySelector("#edit-message");
 
-let editingProductId = null;   // id för produkten som redigeras just nu
-
-
-// ---------- Öppna / stäng adminpanelen ----------
+let editingProductId = null;
 
 adminButton.addEventListener("click", function () {
     sideMenu.classList.remove("open");
@@ -946,9 +844,6 @@ adminButton.addEventListener("click", function () {
 closeAdminButton.addEventListener("click", function () {
     adminPanel.classList.remove("open");
 });
-
-
-// ---------- Lista produkter i admin ----------
 
 function displayAdminProducts() {
     const adminProductList =
@@ -1004,8 +899,7 @@ function displayAdminProducts() {
 }
 
 
-// ---------- Lägg till produkt ----------
-
+// Add new product
 addProductForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -1050,9 +944,6 @@ addProductForm.addEventListener("submit", async function (event) {
         adminMessage.textContent = "Could not connect to the server.";
     }
 });
-
-
-// ---------- Redigera produkt ----------
 
 function openEditProduct(product) {
 
@@ -1126,9 +1017,6 @@ editProductForm.addEventListener("submit", async function (event) {
         editMessage.textContent = "Could not connect to the server.";
     }
 });
-
-
-// ---------- Ta bort produkt ----------
 
 async function deleteProduct(productId) {
     try {
