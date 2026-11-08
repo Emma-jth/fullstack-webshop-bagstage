@@ -12,17 +12,23 @@ The goal was to build a complete web application with a frontend, backend and da
 
 Explore the main features and user flows of Bagstage through the demos below.
 
-### User authentication
+### Homepage and product browsing
 
-![Login demo](docs/bagstage-demo-med-inloggning.gif)
+The homepage showcases the product collection and shopping experience. The demo also shows that users need to log in before they can add products to their favourites.
 
-### Product browsing, search and filtering
+![Homepage demo](docs/bagstage-demo-med-inloggning.gif)
+
+### Product search and filtering
+
+Browse the product catalogue and narrow down the selection using the available search and filtering options.
 
 ![Filtering demo](docs/bagstage-demo-filter.gif)
 
 ### Saving favourite products
 
-![Favourites demo](docs/bagstage-demo.favorite.gif)
+Logged-in users can save products to their personal favourites list and access them later.
+
+![Favourites demo](docs/bagstage-demo-favorite.gif)
 
 ## Features
 
