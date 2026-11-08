@@ -15,9 +15,22 @@
         <nav>
 
             <!-- Menu button -->
-            <button type="button" aria-label="Open menu">
+            <button type="button" id="menu-button" aria-label="Open menu">
                 ☰
             </button>
+
+            <div class="side-menu" id="side-menu">
+                <div class="side-menu-header">
+                    <h2>Menu</h2>
+                    <button type="button" id="close-menu">
+                        ×
+                    </button>
+                </div>
+
+                <button type="button" id="admin-button">
+                    Manage Products
+                </button>
+            </div>
 
             <!-- Logo -->
             <a href="/" class="logo">
@@ -28,84 +41,389 @@
             <form class="search">
                 <label for="search">Search</label>
                 <div class="search-box">
-                <input
-                    type="search"
-                    id="search"
-                    placeholder="What are you looking for?"
-                >
-                <button type="submit" aria-label="Search">
-                  →
-               </button>
-               </div>
-                
+                    <input
+                        type="search"
+                        id="search"
+                        placeholder="What are you looking for?"
+                    >
+                    <button type="submit" aria-label="Search">
+                        →
+                    </button>
+                </div>
             </form>
 
             <!-- Icons -->
             <div class="actions">
-                <button type="button" aria-label="Favorites">
+                <button type="button" id="favorites-button" aria-label="Favorites">
                     ♡
                 </button>
 
-                <button type="button" aria-label="Profile">
-                    ♙
-                </button>
+                <div class="profile-container">
 
-                <button type="button" aria-label="Shopping cart">
+                    <button type="button" id="profile-button" aria-label="Profile">
+                        ♙
+                    </button>
+
+                    <button type="button" id="logout-button">
+                        Log out
+                    </button>
+
+                </div>
+
+                <button type="button" id="cart-button" aria-label="Shopping cart">
                     🛒
+                    <span id="cart-count">0</span>
                 </button>
             </div>
 
         </nav>
     </header>
 
-    <nav class="categories" aria-label="Bag categories">
-        <a href="#">All Bags</a>
-        <a href="#">Clutches</a>
-        <a href="#">Handbag</a>
-        <a href="#">Shopper</a>
-        <a href="#">Backpack</a>
-    
-     </nav>
+    <aside class="cart" id="cart">
 
-    <section class="hero">
-        <img src="images/bagstage-hero.png" alt="Bagstage vintage bags collection">
-    </section>
+        <div class="cart-header">
+            <h2>Shopping Bag</h2>
 
-    <section class="brands">
-        <h2>Discover Brands</h2>
-        <div class="heading-line"></div>
+            <button type="button" id="close-cart" aria-label="Close shopping cart">
+                ×
+            </button>
+        </div>
 
-        <div class="brand-list">
-            <a href="#" class="brand">
-        <img src="images/bagstage-chanel.webp" alt=""Chanel">
-        <h3>Chanel</h3>
-    </a>
-    <a href="#" class="brand">
-        <img src="images/louis-vuitton.jpg" alt=""Chanel">
-        <h3>Louis Vuitton</h3>
-    </a>
-    <a href="#" class="brand">
-        <img src="images/Gucci.jpg" alt=""Chanel">
-        <h3>Gucci</h3>
-    </a>
-    <a href="#" class="brand">
-        <img src="images/bagstage-dior.png" alt=""Chanel">
-        <h3>Dior</h3>
-    </a>
-    <a href="#" class="brand">
-        <img src="images/hermes.jpg" alt=""Chanel">
-        <h3>Hermés</h3>
-    </a>
-</div>
-</section>
+        <div class="cart-items">
+            <p class="empty-cart">Your shopping bag is empty.</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cart-total-price">0 EUR</span>
+            </div>
+
+            <button type="button" class="checkout-button">
+                Checkout
+            </button>
+        </div>
+
+    </aside>
+
+    <aside class="favorites-panel" id="favorites-panel">
+
+        <div class="favorites-header">
+            <h2>Favorites</h2>
+
+            <button type="button" id="close-favorites">
+                ×
+            </button>
+        </div>
+
+        <div class="favorite-items">
+            <p class="empty-favorites">No favorites yet.</p>
+        </div>
+
+    </aside>
 
 
+    <aside class="login-panel" id="login-panel">
+
+        <div class="login-header">
+            <h2>Login</h2>
+
+            <button type="button" id="close-login" aria-label="Close login">
+                ×
+            </button>
+        </div>
+
+        <form id="login-form">
+
+            <label for="login-email">Email</label>
+            <input
+                type="email"
+                id="login-email"
+                required
+            >
+
+            <label for="login-password">Password</label>
+            <input
+                type="password"
+                id="login-password"
+                required
+            >
+
+            <button type="submit">
+                Login
+            </button>
+
+            <p id="login-message"></p>
+
+        </form>
+
+        <div class="register-section">
+            <h2>Create account</h2>
+
+            <form id="register-form">
+
+                <label for="register-name">Name</label>
+                <input
+                    type="text"
+                    id="register-name"
+                    required
+                >
+
+                <label for="register-email">Email</label>
+                <input
+                    type="email"
+                    id="register-email"
+                    required
+                >
+
+                <label for="register-password">Password</label>
+                <input
+                    type="password"
+                    id="register-password"
+                    required
+                >
+
+                <button type="submit">
+                    Register
+                </button>
+
+                <p id="register-message"></p>
+
+            </form>
+        </div>
+
+    </aside>
 
 
+    <aside class="admin-panel" id="admin-panel">
 
-   <main>
+        <div class="admin-header">
+            <h2>Manage Products</h2>
 
-   </main>
+            <button type="button" id="close-admin">
+                ×
+            </button>
+        </div>
 
+        <section class="delete-products-section">
+
+            <h3>Delete Products</h3>
+
+            <div id="admin-product-list"></div>
+
+        </section>
+
+        <section class="add-product-section">
+
+            <h3>Add Product</h3>
+
+            <form id="add-product-form">
+
+                <label for="product-name">Product name</label>
+                <input type="text" id="product-name" required>
+
+                <!-- Brand values match the ids in bagstage.sql (fresh database) -->
+                <label for="product-brand">Brand</label>
+                <select id="product-brand" required>
+                    <option value="">Choose brand</option>
+                    <option value="1">Nordic Atelier</option>
+                    <option value="2">Maison Lumen</option>
+                    <option value="3">Studio Fjord</option>
+                    <option value="4">Atelier Aurora</option>
+                    <option value="5">Haven &amp; Co</option>
+                </select>
+
+                <label for="product-category">Category</label>
+                <select id="product-category" required>
+                    <option value="">Choose category</option>
+                    <option value="clutches">Clutches</option>
+                    <option value="handbag">Handbag</option>
+                    <option value="shopper">Shopper</option>
+                    <option value="backpack">Backpack</option>
+                    <option value="weekend bag">Weekend Bag</option>
+                </select>
+
+                <label for="product-price">Price</label>
+                <input type="number" id="product-price" min="0" required>
+
+                <label for="product-condition">Condition</label>
+                <select id="product-condition" required>
+                    <option value="">Choose condition</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Very good">Very good</option>
+                    <option value="Good">Good</option>
+                </select>
+
+                <label for="product-color">Color</label>
+                <input type="text" id="product-color" required>
+
+                <label for="product-description">Description</label>
+                <textarea id="product-description"></textarea>
+
+                <label for="product-image">Image path</label>
+                <input
+                    type="text"
+                    id="product-image"
+                    placeholder="images/example.png"
+                    required
+                >
+
+                <button type="submit">
+                    Add Product
+                </button>
+
+                <p id="admin-message"></p>
+
+            </form>
+
+        </section>
+
+    </aside>
+
+
+    <div class="edit-modal" id="edit-modal">
+
+        <div class="edit-modal-content">
+
+            <div class="edit-modal-header">
+                <h2>Edit Product</h2>
+                <button type="button" id="close-edit">×</button>
+            </div>
+
+            <form id="edit-product-form">
+
+                <label for="edit-name">Product name</label>
+                <input type="text" id="edit-name" required>
+
+                <label for="edit-brand">Brand</label>
+                <select id="edit-brand" required>
+                    <option value="1">Nordic Atelier</option>
+                    <option value="2">Maison Lumen</option>
+                    <option value="3">Studio Fjord</option>
+                    <option value="4">Atelier Aurora</option>
+                    <option value="5">Haven &amp; Co</option>
+                </select>
+
+                <label for="edit-category">Category</label>
+                <select id="edit-category" required>
+                    <option value="clutches">Clutches</option>
+                    <option value="handbag">Handbag</option>
+                    <option value="shopper">Shopper</option>
+                    <option value="backpack">Backpack</option>
+                    <option value="weekend bag">Weekend Bag</option>
+                </select>
+
+                <label for="edit-price">Price</label>
+                <input type="number" id="edit-price" min="0" required>
+
+                <label for="edit-condition">Condition</label>
+                <select id="edit-condition" required>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Very good">Very good</option>
+                    <option value="Good">Good</option>
+                </select>
+
+                <label for="edit-color">Color</label>
+                <input type="text" id="edit-color" required>
+
+                <label for="edit-description">Description</label>
+                <textarea id="edit-description"></textarea>
+
+                <label for="edit-image">Image path</label>
+                <input type="text" id="edit-image" required>
+
+                <button type="submit">Save Changes</button>
+
+                <p id="edit-message"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <main>
+        <nav class="categories" aria-label="Bag categories">
+            <a href="#all-bags" id="all-bags-link">All Bags</a>
+            <a href="#clutches">Clutches</a>
+            <a href="#handbag">Handbag</a>
+            <a href="#shopper">Shopper</a>
+            <a href="#backpack">Backpack</a>
+        </nav>
+
+        <section class="hero">
+            <img
+                src="images/bagstage-hero.png"
+                alt="Bagstage vintage bags collection"
+                onerror="this.onerror=null; this.src='images/placeholder.svg';"
+            >
+        </section>
+
+
+        <section class="products" id="all-bags">
+            <h2>All Bags</h2>
+            <div class="heading-line"></div>
+
+            <button type="button" id="filter-button">
+                Filter
+            </button>
+
+            <div id="filter-panel">
+                <h3>Filter</h3>
+
+                <div class="condition-filter">
+                    <h4>Condition</h4>
+                    <div id="condition-options"></div>
+                </div>
+
+                <div class="color-filter">
+                    <h4>Color</h4>
+                    <div id="color-options"></div>
+                </div>
+
+                <div class="brand-filter">
+                    <h4>Brand</h4>
+                    <div id="brand-options"></div>
+                </div>
+
+                <div class="type-filter">
+                    <h4>Type</h4>
+                    <div id="type-options"></div>
+                </div>
+
+                <div class="price-filter">
+                    <label for="price-filter">Price</label>
+
+                    <div class="price-row">
+                        <input
+                            type="range"
+                            id="price-filter"
+                            min="950"
+                            max="3200"
+                            value="3200"
+                        >
+                        <span id="price-value">3200 EUR</span>
+                    </div>
+
+                    <button type="button" id="apply-filters">
+                        Apply Filters
+                    </button>
+                    <button type="button" id="reset-filters">
+                        Reset Filters
+                    </button>
+                </div>
+            </div>
+
+            <div id="product-list"></div>
+        </section>
+
+    </main>
+
+    <div id="product-panel">
+        <button type="button" id="close-product-panel">×</button>
+        <div id="product-details"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
